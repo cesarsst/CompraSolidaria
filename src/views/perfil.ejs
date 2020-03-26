@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <base href="/">
+    <!-- BootStrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Style Index -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+ 
+    <%- include('utils/nav') -%>
+  
+    <div class="container loginForm mt-4">
+        <div class="form-signin">
+            <div class="text-center mb-4">
+            <h1 class="h3 mb-3 font-weight-normal">Nome: <%= user.name %></h1> 
+            <h1 class="h3 mb-3 font-weight-normal">Estrelas: <%= user.stars %></h1> 
+            <h1 class="h4 mb-3 font-weight-normal"><% if(user.perfilType == 0){ %> "Estou disposto a realizar compra para alguem." <% } else { %> "Preciso que alguem faça compras para mim."" <% } %></h1> 
+            
+            <div id="logsErrors"></div>
+            <button class="btn btn-lg btn-primary btn-block mt-5" data-toggle="modal" data-target="#solicitaModal"><div id="loading">Solicitar telefone</div></button>
+            
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="solicitaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <p><h4>Deseja solicitar o telefone de <%= user.name %> ?</h4></p>
+                <span>Após a solicitação ser aceita, você receberá um email de aviso. Você pode conferir solicitações aceitas no menu "Mensagens"!</span>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="solicitaTel()">Confirmar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/perfil.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+</body>
+</html>
