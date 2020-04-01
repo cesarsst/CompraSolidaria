@@ -17,17 +17,15 @@ module.exports.userLocation = async function(req, res) {
             {lat: element.lat, lng: element.lng}
          ));
         
-         console.log(distancia)
         if(element._id != req.session.userLogged){
             if(distancia <= 5000){
-                userListProx.push([element, distancia]);
+                userListProx.push([element, distancia/1000]);
             }
         }
         
 
     })
 
-    console.log(userListProx);
     res.status(200).json(userListProx);
 
 }
@@ -51,16 +49,23 @@ module.exports.register = async function(req, res, next){
 
     try{
 
-         // Return errors validator
+        // Return errors validator
         const errors = validationResult(req);
         if(!errors.isEmpty()){
             res.status(422).json({errors: errors.array({onlyFirstError: true})})
             return 
         }
 
-        const {name, email, tel, password, passwordConfirm, latitude, longitude, perfilType} = req.body;
+
+        var {name, email, tel, password, confirmPassword, perfilType, lat, lng} = req.body;
+
+        if(perfilType[0]){
+            perfilType = 0;
+        } else {
+            perfilType = 1;
+        }
         
-        if(password != passwordConfirm){
+        if(password !== confirmPassword){
            return res.status(422).json({errors: [{msg:'As senhas não coincidem!'}]});
         }
 
@@ -69,12 +74,59 @@ module.exports.register = async function(req, res, next){
             return res.status(422).json({errors: [{msg:'Já existe um cadastro com esse email!'}]});
         }
 
-        const user = await User.create({name, email, tel, password, passwordConfirm, lat:latitude, lng:longitude, perfilType});   
+        const user = await User.create({name,img: req.file.filename, email, tel, password, confirmPassword, lat, lng, perfilType});   
        
-        return res.status(200).json({user});
+        return res.render('login');
 
     } catch(err) {
         return next(err);
     }
 
+}
+
+exports.atualizaPerfil = async (req, res, next) =>{
+    
+    try{
+
+        // Return errors validator
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            res.status(422).json({errors: errors.array({onlyFirstError: true})})
+            return 
+        }
+
+        var {name, tel, perfilType} = req.body;
+        
+        // Fazer validação do telefone enviado
+
+        if(perfilType[0]){
+            perfilType = 0;
+        } else {
+            perfilType = 1;
+        }
+        
+
+        // Verifica se foi enviado um arquivo, se não foi, mantem o atual
+        var fileName = req.file;
+        const findUser = await User.find({_id: req.session.userLogged});
+        if(fileName == undefined){
+            fileName = findUser[0].img;  
+        } else {
+            fileName = req.file.filename;
+        }
+      
+        const user = await User.findById(req.session.userLogged, function(err, doc){
+            doc.name = name;
+            doc.img = fileName;
+            doc.tel = tel;
+            doc.perfilType = perfilType;
+            doc.save();
+        });
+        
+        return res.render('conta');
+
+    } catch(err){
+        return next(err);
+    }
+    
 }

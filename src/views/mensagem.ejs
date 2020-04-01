@@ -13,24 +13,31 @@
 <body>
  
     <%- include('utils/nav') -%>
-  
-    <center><div class="container loginForm mt-4" id="userLoggedRequest">
+    
+    <div class="container-fluid ">
         
-    </div></center>
+        <div class="mt-5">
+              
+               
+                <div class="container msgContent mt-4" id="userLoggedRequest">
+                    <h4 class="mt-5">Solicitações Pendentes:</h4>
+                </div>
+                    
+                <div class="container msgContent mt-4" id="userLoggedResponse"></div>
+        
+                <div class="container msgContent mt-4" id="userLoggedResponseAccept">
+                    <h4 class="mt-5">Solicitações aceitas:</h4>
+                </div>
+                
+                <div class="container msgContent mt-4" id="userLoggedRequestAccept"></div>
 
-    <center><div class="container loginForm mt-4" id="userLoggedRequestAccept">
-     
-    </div></center>
+            </div>
+        </div>
+                
 
-    <center><div class="container loginForm mt-4" id="userLoggedResponse">
-      
-    </div></center>
-
-    <center><div class="container loginForm mt-4" id="userLoggedResponseAccept">
-     
-    </div></center>
-
-
+            
+        
+    </div>
 
    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

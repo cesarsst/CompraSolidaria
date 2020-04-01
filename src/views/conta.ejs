@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra Solidária - Register</title>
+
+    <!-- BootStrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Style Index -->
+    <link rel="stylesheet" href="css/style.css">
+ 
+
+</head>
+<body>
+ 
+    <%- include('utils/nav') -%>
+    
+    <div class="row mt-5">
+
+        <div class="col-sm-4">
+            <div class="card marginCard" id="perfilFoto">
+                
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="container atualizaPerfil mt-4">
+                <form id="formulario" action="/atualizaPerfil" method="POST" enctype="multipart/form-data">
+                                  
+                        <div class="form-label-group mt-2">
+                            <label for="inputName">Nome*</label>
+                            <input type="text" id="inputName" name="name" class="form-control" placeholder="Nome" required>
+                        </div>
+        
+                        <div class="form-label-group mt-2 ">
+                            <label for="inputImg">Foto perfil*</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="file" id="customFile">
+                                    <label id="inputImg" name="file" class="custom-file-label" for="customFile">Escolha uma imagem</label>
+                                </div>
+                        </div>
+                    
+                        <div class="form-label-group mt-2">
+                            <label for="inputEmail">Telefone (com ddd)*</label>
+                            <input type="phone" id="inputTel" name="tel" class="form-control" placeholder="Telefone (somente numeros)" required autofocus>
+                        </div>
+                    
+        
+                        <div class="form-label-group mt-2">
+                            <label for="perfilType">Selecione uma opção de perfil* :</label>
+                            <select name="perfilType" id="perfilType" class="form-control">
+                                <option value="0">Estou disposto a realizar compra para alguem.</option>
+                                <option value="1">Preciso que alguem faça compras para mim.</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Busca posição da pessoa para atualização -->
+                        <input type="text" id="inputLat" name="lat" class="form-control" hidden >
+                        <input type="text" id="inputLng" name="lng" class="form-control"  hidden >
+                        <input type="text" id="inputPerfilType" name="perfilType" class="form-control"  hidden>
+        
+        
+                        <button class="btn btn-lg btn-primary btn-block mt-5" type="submit"><div id="loading">Atualizar</div></button>
+                   
+                </form>
+            </div>
+        </div>
+
+        <div class="col-sm-2"></div>
+    </div>
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/atualizaPerfil.js"></script>
+
+</body>
+</html>

@@ -17,62 +17,72 @@
     <%- include('utils/navOff') -%>
     
     <div class="container loginForm mt-4">
-        <div class="form-signin">
-            <div class="text-center mb-4">
-            <h1 class="h3 mb-3 font-weight-normal">Login</h1>
-            <p>Já possui uma conta? <a href="/login">Entre agora!</a></p>
-            <p style="color: red;">Para registrar, permita o acesso a sua localização!</a></p>
-            <div id="logsErrors"></div>    
-        </div>
-        
-            <div class="form-label-group mt-2">
-                <label for="inputName">Nome*</label>
-                <input type="text" id="inputName" class="form-control" placeholder="Nome" required>
-            </div>
-
-
-            <div class="form-label-group">
-                <label for="inputEmail">Email address*</label>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            </div>
-
-            <div class="form-label-group">
-                <label for="inputEmail">Telefone (com ddd)*</label>
-                <input type="phone" id="inputTel" class="form-control" placeholder="Telefone (somente numeros)" required autofocus>
-            </div>
-        
-            <div class="form-label-group mt-2">
-                <label for="inputPassword">Password*</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            </div>
-
-            <div class="form-label-group mt-2">
-                <label for="inputPasswordConfirm">Confirm password*</label>
-                <input type="password" id="inputPasswordConfirm" class="form-control" placeholder="Confirme a password" required>
-            </div>
-
+        <form id="formulario" action="/register" method="POST" enctype="multipart/form-data">
+                
+                <div class="form-signin">
+                    <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+                    <p>Já possui uma conta? <a href="/login">Entre agora!</a></p>
+                    <p style="color: red;">Para registrar, permita o acesso a sua localização!</a></p>
+                    <div id="logsErrors"></div>    
+                </div>
             
-            <div class="mt-3"><b>Selecione uma opção de perfil* :</b></div>
-            <div class="custom-control custom-radio custom-control-inline mt-2">
-                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                <label class="custom-control-label" for="customRadio1">Estou disposto a realizar compra para alguem.</label>
-            </div>
+                <div class="form-label-group mt-2">
+                    <label for="inputName">Nome*</label>
+                    <input type="text" id="inputName" name="name" class="form-control" placeholder="Nome" required>
+                </div>
 
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                <label class="custom-control-label" for="customRadio2">Preciso que alguem faça compras para mim.</label>
-            </div>
+                <div class="form-label-group mt-2 ">
+                    <label for="inputImg">Foto perfil*</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="file" id="customFile">
+                            <label id="inputImg" name="file" class="custom-file-label" for="customFile">Escolha uma imagem</label>
+                        </div>
+                </div>
+            
+                <div class="form-label-group mt-2">
+                    <label for="inputEmail">Email address*</label>
+                    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+                </div>
+
+                <div class="form-label-group mt-2">
+                    <label for="inputEmail">Telefone (com ddd)*</label>
+                    <input type="phone" id="inputTel" name="tel" class="form-control" placeholder="Telefone (somente numeros)" required autofocus>
+                </div>
+            
+                <div class="form-label-group mt-2">
+                    <label for="inputPassword">Password*</label>
+                    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+                </div>
+
+                <div class="form-label-group mt-2">
+                    <label for="inputPasswordConfirm">Confirm password*</label>
+                    <input type="password" id="inputPasswordConfirm" name="confirmPassword" class="form-control" placeholder="Confirme a password" required>
+                </div>
+
+                <div class="form-label-group mt-2">
+                    <label for="perfilType">Selecione uma opção de perfil* :</label>
+                    <select name="perfilType" id="perfilType" class="form-control">
+                        <option value="0">Estou disposto a realizar compra para alguem.</option>
+                        <option value="1">Preciso que alguem faça compras para mim.</option>
+                    </select>
+                </div>
+
+                <input type="text" id="inputLat" name="lat" class="form-control" hidden >
+                <input type="text" id="inputLng" name="lng" class="form-control"  hidden >
+                <input type="text" id="inputPerfilType" name="perfilType" class="form-control"  hidden>
 
 
-            <button class="btn btn-lg btn-primary btn-block mt-5" onclick="register()"><div id="loading">Registrar</div></button>
-            <p class="mt-5 mb-3 text-muted text-center">&copy; 2020</p>
-        </div>
+                <button class="btn btn-lg btn-primary btn-block mt-5" type="submit"><div id="loading">Registrar</div></button>
+                <p class="mt-5 mb-3 text-muted text-center">&copy; 2020</p>
+           
+        </form>
     </div>
 
-    <script type="text/javascript" src="js/register.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
+    <script type="text/javascript" src="js/register.js"></script>
+
 </body>
 </html>

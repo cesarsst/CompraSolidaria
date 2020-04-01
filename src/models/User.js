@@ -7,6 +7,11 @@ const UserSchema = new Schema({
         required: true
     },
 
+    img:{
+        type: String,
+        required: true
+    },
+
     tel:{
         type: Number,
         required: true

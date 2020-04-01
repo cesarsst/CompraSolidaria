@@ -2,7 +2,6 @@ function solicitaTel(idUser){
 
     var url = window.location.href;
     var id = url.split('/perfil/')[1];
-
     const solicitaModal = window.document.getElementById('solicitaModal');
     const loading = window.document.getElementById('loading');
     const logsErrors = window.document.getElementById('logsErrors')

@@ -6,13 +6,13 @@ const expressSession = require('express-session');
 
 const app = express();
 
-const apiGoogleKey = "AIzaSyAqURsSFpC-7Igj4cxH0-rzrf7sqDSOV5Y";
-
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 // Body-parser
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(express.json({limit: '50mb'}));
+
 
 app.use(express.static('./src/public'));
 

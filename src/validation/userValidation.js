@@ -1,4 +1,4 @@
-const { body, param } = require('express-validator');
+const { body } = require('express-validator');
 
 exports.validate = (method) => {
 
@@ -8,12 +8,18 @@ exports.validate = (method) => {
             return [
                 body('name', 'Nome inválido!').exists().not().isEmpty(),
                 body('email', 'Email inválido!').exists().isEmail().not().isEmpty(),
-                body('latitude', 'Ative sua localização para se registrar!').exists().not().isEmpty(),
-                body('longitude', 'Ative sua localização para se registrar!').exists().not().isEmpty(),                                
+                body('lat', 'Ative sua localização para se registrar!').exists().not().isEmpty(),
+                body('lng', 'Ative sua localização para se registrar!').exists().not().isEmpty(),                                
                 body('password', 'Senha inválida. Sua senha precisa ter mais de 6 digitos!').exists().isLength({min: 6}).isAlphanumeric().not().isEmpty(),
             ]
         }
 
+        case 'atualiza':{
+            return [
+                body('name', 'Nome inválido!').exists().not().isEmpty(),
+            ] 
+
+        }
 
     }
     

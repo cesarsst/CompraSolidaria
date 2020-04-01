@@ -3,6 +3,11 @@ const UserValidation = require('../validation/userValidation');
 const LoginController = require('../controller/loginController');
 const PerfilController = require('../controller/perfilController');
 
+const User = require('../models/User');
+
+const multer = require('multer');
+const multConfig = require('../config/multer');
+
 module.exports = app =>{
 
     app.get('/', (req, res)=>{
@@ -26,21 +31,61 @@ module.exports = app =>{
     });
 
     app.post('/register',
-        UserValidation.validate('all')
-    ,(req, res, next)=>{
+        multer(multConfig).single('file'),
+        UserValidation.validate('all'),
+    (req, res, next)=>{
         UserController.register(req, res, next);
     });
 
     app.post('/userLocation', (req, res)=>{
-        UserController.userLocation(req, res)
+        if(!req.session.autorizado){
+            return res.render('login');
+        } else {
+            UserController.userLocation(req, res);
+        }
     });
 
     app.get('/perfil/:id', (req, res)=>{
-        PerfilController.showPerfil(req, res);
+        if(!req.session.autorizado){
+            return res.render('login');
+        } else {
+            PerfilController.showPerfil(req, res);
+        }
     });
 
+    app.get('/atualizaPerfil', (req, res)=>{
+        if(req.session.autorizado){
+            return res.render('conta');
+        }
+        return res.render('login');
+    });
+
+    app.post('/atualizaPerfil', (req, res)=>{
+            if(!req.session.autorizado){
+                return res.render('login');
+            }
+        },
+        multer(multConfig).single('file'),
+        UserValidation.validate('atualiza'),
+        (req, res, next)=>{
+            UserController.atualizaPerfil(req, res, next);
+        }
+    );
+
+    app.get('/requestPerfilData', (req, res)=>{
+        if(!req.session.autorizado){
+            return res.render('login');
+        } else {
+            PerfilController.requestPerfilData(req, res);
+        }
+    })
+
     app.post('/solicitaTel', (req, res) =>{
-        PerfilController.solicitaTel(req, res);
+        if(!req.session.autorizado){
+            return res.render('login');
+        } else {
+            PerfilController.solicitaTel(req, res);
+        }
     })
 
     app.get('/mensagem', (req, res) =>{
