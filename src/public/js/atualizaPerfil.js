@@ -19,10 +19,10 @@ $(document).ready(function(){
             $(perfilFoto).html('<img class="card-img-top img-fluid cardTam mt-3" id="imgUser" src="img/uploads/'+user.img+'"></img>') 
                   
             $(name).attr('placeholder', user.name);
-            $(name).value = user.name;
+            name.value = user.name;
 
             $(tel).attr('placeholder', user.tel)
-            $(tel).value = user.tel;
+            tel.value = user.tel;
 
             if(user.perfilType == 0){
                 perfilType.options.selectedIndex = 0;

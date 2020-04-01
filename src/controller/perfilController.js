@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const RequestTel = require('../models/RequestTel');
+const Star = require('../models/Stars');
 
 exports.showPerfil = async (req, res) =>{
 
@@ -79,7 +80,7 @@ exports.findRequest = async (req, res) =>{
 
             // Se o outro usuario aceito -> salva o nome e o telefone
             if(requestList[i].status == true){
-                userLoggedRequestAccept.push([userResponse[0].name, userResponse[0].tel])
+                userLoggedRequestAccept.push([userResponse[0].name, userResponse[0].tel, userResponse[0]._id])
             } else {
                 // Se não entra pra fila de pendentes
                 userLoggedRequest.push([userResponse[0].name]);
@@ -93,7 +94,7 @@ exports.findRequest = async (req, res) =>{
             var userRequest = await User.find({_id:id});
             // Se o usuario conectado já aceitou a solicitação -> mostra o nome e o telefone de quem solicitou
             if(requestList[i].status == true){
-                userLoggedResponseAccept.push([userRequest[0].name, userRequest[0].tel]);
+                userLoggedResponseAccept.push([userRequest[0].name, userRequest[0].tel, userRequest[0]._id]);
             } else {
                 // Se não aceitou ainda -> mostra só o nome
                 userLoggedResponse.push([userRequest[0].name, requestList[i]._id]);
@@ -138,4 +139,29 @@ exports.requestPerfilData = async(req, res) => {
     
     return res.status(200).json({user});
 
+}
+
+exports.addStar = async (req, res)=>{
+    const {id} = req.params;
+
+    // Verifica se usuario logado já votou no usuario clicado
+    const userLogged = await User.find({_id: req.session.userLogged});
+    const userVote = await User.find({_id: id});
+
+    // Busca se já existe um voto dado pelo usuario logado no perfil clicado.
+    const voteExist = await Star.find({userRequest: userLogged[0]._id, userResponse: userVote[0]._id});
+    if(voteExist.length != 0){
+        return res.render('mensagem', {status: 422, msg:"Você já votou nesse perfil!"}) // Editar para retornar como erro
+    } else {
+        await Star.create({
+            userRequest: userLogged[0]._id,
+            userResponse: userVote[0]._id
+        });
+
+        userVote[0].stars += 1;
+        userVote[0].save();
+    }
+
+
+    res.render('mensagem', {status: 200, msg: "Voto contabilizado!"}); // Retornar como msg 
 }

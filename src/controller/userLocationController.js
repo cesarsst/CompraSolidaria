@@ -5,9 +5,17 @@ module.exports.userLocation = async function(req, res) {
     
     const { coordenadas } =  req.body;
 
+    // Atualiza a posição atual do usuario conectado
+    const userLogged = await User.find({_id: req.session.userLogged});
+    userLogged[0].lat = coordenadas.lat;
+    userLogged[0].lng = coordenadas.lng;
+    userLogged[0].save();
+    console.log(userLogged[0]);
+
     const userListAll = await User.find({});
     var userListProx = [];
 
+    // Busca usuario proximos, até 5km
     userListAll.forEach(element => {
 
         var distancia = 0;
@@ -85,47 +93,53 @@ module.exports.register = async function(req, res, next){
 
 exports.atualizaPerfil = async (req, res, next) =>{
     
-    try{
-
-        // Return errors validator
-        const errors = validationResult(req);
-        if(!errors.isEmpty()){
-            res.status(422).json({errors: errors.array({onlyFirstError: true})})
-            return 
-        }
-
-        var {name, tel, perfilType} = req.body;
+    if(req.session.autorizado){
         
-        // Fazer validação do telefone enviado
+        try{
 
-        if(perfilType[0]){
-            perfilType = 0;
-        } else {
-            perfilType = 1;
-        }
+            // Return errors validator
+            const errors = validationResult(req);
+            if(!errors.isEmpty()){
+                res.status(422).json({errors: errors.array({onlyFirstError: true})})
+                return 
+            }
+
+            var {name, tel, perfilType} = req.body;
+            
+            // Fazer validação do telefone enviado
+
+            if(perfilType[0]){
+                perfilType = 0;
+            } else {
+                perfilType = 1;
+            }
+            
+
+            // Verifica se foi enviado um arquivo, se não foi, mantem o atual
+            var fileName = req.file;
+            const findUser = await User.find({_id: req.session.userLogged});
+            if(fileName == undefined){
+                fileName = findUser[0].img;  
+            } else {
+                fileName = req.file.filename;
+            }
         
+            const user = await User.findById(req.session.userLogged, function(err, doc){
+                doc.name = name;
+                doc.img = fileName;
+                doc.tel = tel;
+                doc.perfilType = perfilType;
+                doc.save();
+            });
+            
+            return res.render('conta');
 
-        // Verifica se foi enviado um arquivo, se não foi, mantem o atual
-        var fileName = req.file;
-        const findUser = await User.find({_id: req.session.userLogged});
-        if(fileName == undefined){
-            fileName = findUser[0].img;  
-        } else {
-            fileName = req.file.filename;
+        } catch(err){
+            return next(err);
         }
-      
-        const user = await User.findById(req.session.userLogged, function(err, doc){
-            doc.name = name;
-            doc.img = fileName;
-            doc.tel = tel;
-            doc.perfilType = perfilType;
-            doc.save();
-        });
-        
-        return res.render('conta');
-
-    } catch(err){
-        return next(err);
+    } else{
+        return res.render('login');
     }
+
     
 }

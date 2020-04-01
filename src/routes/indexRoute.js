@@ -68,11 +68,7 @@ module.exports = app =>{
         return res.render('login');
     });
 
-    app.post('/atualizaPerfil', (req, res)=>{
-            if(!req.session.autorizado){
-                return res.render('login');
-            }
-        },
+    app.post('/atualizaPerfil',
         multer(multConfig).single('file'),
         UserValidation.validate('atualiza'),
         (req, res, next)=>{
@@ -98,7 +94,7 @@ module.exports = app =>{
 
     app.get('/mensagem', (req, res) =>{
         if(req.session.autorizado){
-            return  res.render('mensagem'); 
+            return  res.render('mensagem', {msg: null}); 
         }
         res.render('login');
     })
@@ -127,6 +123,15 @@ module.exports = app =>{
         }
     })
 
+
+    app.get('/addStar/:id', (req, res) =>{
+        if(req.session.autorizado){
+            PerfilController.addStar(req, res);
+        } else {
+            return res.render('login');
+        }
+
+    });
    
 
     app.get('/sair', (req, res)=>{

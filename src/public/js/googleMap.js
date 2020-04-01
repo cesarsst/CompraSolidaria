@@ -45,11 +45,15 @@ function addPerfil(usersList, indiceRecive){
     
     for(let i = 0; i < usersList.length; i++){
 
+      if(usersList[i][1] < 1){
+        usersList[i][1] = 1;
+      }
+
       var content = '<div class="card marginCard" id="card'+i+'" style="display:none">'+
       '<img class="card-img-top img-fluid cardTam" src="img/uploads/'+usersList[i][0].img+'" alt="Card image cap">'+
       '<div class="card-body text-center">'+
        '<h5 class="card-title">'+usersList[i][0].name+'</h5>'+
-        '<p class="card-text">Distância de você:'+ usersList[i][1]+'</p>'+
+        '<p class="card-text">Distância de você: '+ usersList[i][1]+' Km</p>'+
           '<a class="btn btn-success" href="/perfil/'+usersList[i][0]._id+'">Entrar em contato</a>'+
     '   </form>'+
       '</div>'+
