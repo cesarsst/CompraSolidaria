@@ -27,7 +27,7 @@ module.exports = app =>{
     })
 
     app.get('/register', (req, res)=>{
-        res.render('register')
+        res.render('register', {errors: null});
     });
 
     app.post('/register',
@@ -50,6 +50,14 @@ module.exports = app =>{
             return res.render('login');
         } else {
             PerfilController.showPerfil(req, res);
+        }
+    });
+
+    app.get('/getImgPerfil/:id', (req, res)=>{
+        if(!req.session.autorizado){
+            return res.render('login');
+        } else {
+            PerfilController.getImgPerfil(req, res);
         }
     });
 
@@ -118,6 +126,8 @@ module.exports = app =>{
             res.render('login');
         }
     })
+
+   
 
     app.get('/sair', (req, res)=>{
         req.session.destroy();

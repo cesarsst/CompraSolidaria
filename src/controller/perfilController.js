@@ -3,19 +3,24 @@ const RequestTel = require('../models/RequestTel');
 
 exports.showPerfil = async (req, res) =>{
 
-    if(req.session.autorizado){
+    
         const { id } = req.params;
 
         const userExist = await User.find({_id: id});
         const user = {name: userExist[0].name, stars:  userExist[0].stars, perfilType:  userExist[0].perfilType, id: userExist[0]._id};
 
         return res.render('perfil', {user});
-    } else {
-        res.render('login');
-    }   
-
+ 
 }
 
+exports.getImgPerfil = async(req, res)=>{
+    const { id } = req.params;
+
+    const userExist = await User.find({_id: id});
+    const user = {name: userExist[0].name, stars:  userExist[0].stars, perfilType:  userExist[0].perfilType, id: userExist[0]._id, img: userExist[0].img};
+
+    return res.status(200).json({user});
+}
 
 exports.solicitaTel = async (req, res)=>{
 

@@ -17,7 +17,8 @@
     <div class="container loginForm mt-4">
         <div class="form-signin">
             <div class="text-center mb-4">
-            <h1 class="h3 mb-3 font-weight-normal">Nome: <%= user.name %></h1> 
+            <div id="imgPerfil"></div>
+            <h1 class="h3 mb-3 font-weight-normal mt-5">Nome: <%= user.name %></h1> 
             <h1 class="h3 mb-3 font-weight-normal">Estrelas: <%= user.stars %></h1> 
             <h1 class="h4 mb-3 font-weight-normal"><% if(user.perfilType == 0){ %> "Estou disposto a realizar compra para alguem." <% } else { %> "Preciso que alguem faça compras para mim."" <% } %></h1> 
             
@@ -46,10 +47,10 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="js/perfil.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
+    <script type="text/javascript" src="js/perfil.js"></script>
+
 </body>
 </html>

@@ -1,3 +1,32 @@
+$(document).ready(function(){
+    
+    var url = window.location.href;
+    var id = url.split('/perfil/')[1];
+    const imgPerfil = document.getElementById('imgPerfil');
+
+    $(function(){
+        $.ajax({
+            type: 'GET',
+            url: '/getImgPerfil/'+id, 
+            beforeSend: function(){                
+
+            },
+            success: function(data) {  
+                const user = data.user;
+                console.log(data);
+                $(imgPerfil).html('<img class="card-img-top img-fluid cardTam mt-3" id="imgUser" src="img/uploads/'+user.img+'"></img>')
+            },
+            error: function(data){
+             										
+            }			
+
+        });
+    })
+
+
+})
+
+
 function solicitaTel(idUser){
 
     var url = window.location.href;

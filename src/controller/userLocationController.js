@@ -52,8 +52,7 @@ module.exports.register = async function(req, res, next){
         // Return errors validator
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.status(422).json({errors: errors.array({onlyFirstError: true})})
-            return 
+            return res.render('register', {errors});
         }
 
 
@@ -66,12 +65,12 @@ module.exports.register = async function(req, res, next){
         }
         
         if(password !== confirmPassword){
-           return res.status(422).json({errors: [{msg:'As senhas não coincidem!'}]});
+            return res.render('register', {errors: "As senhas não coincidem!"});
         }
 
         const userExist = await User.find({email});
         if(userExist.length != 0){
-            return res.status(422).json({errors: [{msg:'Já existe um cadastro com esse email!'}]});
+            return res.render('register', {errors: "Email já cadastrado!"});
         }
 
         const user = await User.create({name,img: req.file.filename, email, tel, password, confirmPassword, lat, lng, perfilType});   

@@ -18,12 +18,21 @@
     
     <div class="container loginForm mt-4">
         <form id="formulario" action="/register" method="POST" enctype="multipart/form-data">
+
+                
+
                 
                 <div class="form-signin">
                     <div class="text-center mb-4">
                     <h1 class="h3 mb-3 font-weight-normal">Login</h1>
                     <p>Já possui uma conta? <a href="/login">Entre agora!</a></p>
                     <p style="color: red;">Para registrar, permita o acesso a sua localização!</a></p>
+                    <p style="color: red;">
+                        <% if(errors){  %>
+                            <%= errors %>
+                        <% } %>
+                    </a></p>
+
                     <div id="logsErrors"></div>    
                 </div>
             
