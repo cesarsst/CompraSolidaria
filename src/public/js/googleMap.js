@@ -8,6 +8,8 @@ $(document).ready(function(){
       var latitude = posicao.coords.latitude;
       var longitude = posicao.coords.longitude;
 
+      console.log(latitude, longitude);
+
       var coordenadas = {lat: latitude, lng: longitude};
       // Busca os markers
       $(function(){
