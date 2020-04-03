@@ -1,7 +1,14 @@
 const app = require('./server');
 const mongoose = require('mongoose')
+const fs = require("fs");
+const https = require("https");
 
-var port = process.env.PORT || 21307;
+var port = process.env.PORT || 443;
+
+const options = {
+  key: fs.readFileSync("./server.key"),
+  cert: fs.readFileSync("./server.crt")
+};
 
 // setup mongo connection
 mongoose.connect('mongodb+srv://admin:admin@cluster0-jl0x6.mongodb.net/CompraSolidaria?retryWrites=true&w=majority', {
@@ -29,9 +36,7 @@ app.get("/*", (req, res, next) => {
   }
 });
 
-app.listen(port, function(){
-    console.log('Servidor online!');
-});
+https.createServer(options, app).listen(port);
 
 
 
