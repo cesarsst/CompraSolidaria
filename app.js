@@ -1,11 +1,7 @@
 const app = require('./server');
 const mongoose = require('mongoose')
-const https = require('https');
-const fs = require('fs');
 
-var port = process.env.PORT || 3000;
-
-
+var port = process.env.PORT || 21307;
 
 // setup mongo connection
 mongoose.connect('mongodb+srv://admin:admin@cluster0-jl0x6.mongodb.net/CompraSolidaria?retryWrites=true&w=majority', {
@@ -22,6 +18,16 @@ mongoose.connection.on('connected', function () {
 });
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
+
+app.get("/*", (req, res, next) => {
+  if (req.headers.host.match(/^www/) !== null) {
+      res.redirect(
+          "http://" + req.headers.host.replace(/^www\./, "") + req.url
+      );
+  } else {
+      next();
+  }
+});
 
 app.listen(port, function(){
     console.log('Servidor online!');
