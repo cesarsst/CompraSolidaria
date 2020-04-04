@@ -18,26 +18,26 @@ module.exports = app =>{
         }
     })
 
-    app.get('/login', (req, res) =>{
+    app.get('//login', (req, res) =>{
         res.render('login');
     })
 
-    app.post('/login', (req, res) =>{
+    app.post('//login', (req, res) =>{
         LoginController.login(req, res);
     })
 
-    app.get('/register', (req, res)=>{
+    app.get('//register', (req, res)=>{
         res.render('register', {errors: null});
     });
 
-    app.post('/register',
+    app.post('//register',
         multer(multConfig).single('file'),
         UserValidation.validate('all'),
     (req, res, next)=>{
         UserController.register(req, res, next);
     });
 
-    app.post('/userLocation', (req, res)=>{
+    app.post('//userLocation', (req, res)=>{
         if(!req.session.autorizado){
             return res.render('login');
         } else {
@@ -45,7 +45,7 @@ module.exports = app =>{
         }
     });
 
-    app.get('/perfil/:id', (req, res)=>{
+    app.get('//perfil/:id', (req, res)=>{
         if(!req.session.autorizado){
             return res.render('login');
         } else {
@@ -53,7 +53,7 @@ module.exports = app =>{
         }
     });
 
-    app.get('/getImgPerfil/:id', (req, res)=>{
+    app.get('//getImgPerfil/:id', (req, res)=>{
         if(!req.session.autorizado){
             return res.render('login');
         } else {
@@ -61,14 +61,14 @@ module.exports = app =>{
         }
     });
 
-    app.get('/atualizaPerfil', (req, res)=>{
+    app.get('//atualizaPerfil', (req, res)=>{
         if(req.session.autorizado){
             return res.render('conta');
         }
         return res.render('login');
     });
 
-    app.post('/atualizaPerfil',
+    app.post('//atualizaPerfil',
         multer(multConfig).single('file'),
         UserValidation.validate('atualiza'),
         (req, res, next)=>{
@@ -76,7 +76,7 @@ module.exports = app =>{
         }
     );
 
-    app.get('/requestPerfilData', (req, res)=>{
+    app.get('//requestPerfilData', (req, res)=>{
         if(!req.session.autorizado){
             return res.render('login');
         } else {
@@ -84,7 +84,7 @@ module.exports = app =>{
         }
     })
 
-    app.post('/solicitaTel', (req, res) =>{
+    app.post('//solicitaTel', (req, res) =>{
         if(!req.session.autorizado){
             return res.render('login');
         } else {
@@ -92,14 +92,14 @@ module.exports = app =>{
         }
     })
 
-    app.get('/mensagem', (req, res) =>{
+    app.get('//mensagem', (req, res) =>{
         if(req.session.autorizado){
             return  res.render('mensagem', {msg: null}); 
         }
         res.render('login');
     })
     
-    app.get('/findRequest', (req, res) =>{
+    app.get('//findRequest', (req, res) =>{
         if(req.session.autorizado){
             PerfilController.findRequest(req, res);
         }else{
@@ -107,7 +107,7 @@ module.exports = app =>{
         }
     })
 
-    app.get('/acceptRequest/:id', (req, res)=>{
+    app.get('//acceptRequest/:id', (req, res)=>{
         if(req.session.autorizado){
             PerfilController.acceptRequest(req, res);
         } else {
@@ -115,7 +115,7 @@ module.exports = app =>{
         }
     })
 
-    app.get('/rejectRequest/:id', (req, res)=>{
+    app.get('//rejectRequest/:id', (req, res)=>{
         if(req.session.autorizado){
             PerfilController.rejectRequest(req, res);
         } else {
@@ -124,7 +124,7 @@ module.exports = app =>{
     })
 
 
-    app.get('/addStar/:id', (req, res) =>{
+    app.get('//addStar/:id', (req, res) =>{
         if(req.session.autorizado){
             PerfilController.addStar(req, res);
         } else {
@@ -134,7 +134,7 @@ module.exports = app =>{
     });
    
 
-    app.get('/sair', (req, res)=>{
+    app.get('//sair', (req, res)=>{
         req.session.destroy();
         res.render('login');
     })
