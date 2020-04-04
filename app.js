@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const fs = require("fs");
 const https = require("https");
 
-var port = process.env.PORT || 443;
+var port = process.env.PORT || 21307;
 
 const options = {
   key: fs.readFileSync("./server.key"),
@@ -26,15 +26,6 @@ mongoose.connection.on('connected', function () {
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-app.get("/*", (req, res, next) => {
-  if (req.headers.host.match(/^www/) !== null) {
-      res.redirect(
-          "http://" + req.headers.host.replace(/^www\./, "") + req.url
-      );
-  } else {
-      next();
-  }
-});
 
 https.createServer(options, app).listen(port);
 
