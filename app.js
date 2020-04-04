@@ -1,14 +1,8 @@
 const app = require('./server');
 const mongoose = require('mongoose')
-const fs = require("fs");
-const https = require("https");
+
 
 var port = process.env.PORT || 21307;
-
-const options = {
-  key: fs.readFileSync("./server.key"),
-  cert: fs.readFileSync("./server.crt")
-};
 
 // setup mongo connection
 mongoose.connect('mongodb+srv://admin:admin@cluster0-jl0x6.mongodb.net/CompraSolidaria?retryWrites=true&w=majority', {
@@ -26,8 +20,9 @@ mongoose.connection.on('connected', function () {
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-
-https.createServer(options, app).listen(port);
+app.listen(port, ()=>{
+  console.log("Servidor online!");
+})
 
 
 
